@@ -13,7 +13,7 @@ const Home = () => {
         </View>
         
         <View>  
-            <Text style={styles.subHeader}>Recently Lost Pets</Text>
+            <Text style={styles.subHeader}>Recently Lost Pets was here </Text>
         </View>
     </View>
   )
