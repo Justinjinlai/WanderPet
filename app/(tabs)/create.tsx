@@ -4,7 +4,7 @@ export default function CameraScreen() {
     return (
         <View> 
             {" "}
-            <Text>Hello, This is CameraScreen</Text>
+            <Text>Hello, This is CreateScreen</Text>
         </View>
     );
 }
