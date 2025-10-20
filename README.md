@@ -36,5 +36,7 @@ Clone this repository to your local machine:
 ```bash
 git clone https://github.com/Justinjniai/WanderPet.git
 
+```
+Figma Wireframe/designs
+https://www.figma.com/design/oPPSIiAOvSwiRRaQ8qSGz3/Fantastic-5?node-id=97-166&p=f&t=LLdTsKaCZdbFRsYC-0
 
-Figma Wireframe: https://www.figma.com/design/oPPSIiAOvSwiRRaQ8qSGz3/Fantastic-5?node-id=0-1&p=f&t=T6sPOhQCI9yyznIz-0
