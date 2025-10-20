@@ -7,12 +7,12 @@ export default function RootLayout() {
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
       <StatusBar style="dark" hidden={false} />
-      <Stack>
-        {/*  App will start at the Login screen first */}
+      <Stack initialRouteName="auth/login">
+        {/* Start at the login screen first */}
         <Stack.Screen name="auth/login" options={{ headerShown: false }} />
         <Stack.Screen name="auth/register" options={{ headerShown: false }} />
 
-        {/* Tabs are still accessible later (after login) */}
+        {/* Tabs (after login) */}
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
     </SafeAreaView>
