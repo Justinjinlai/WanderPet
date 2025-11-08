@@ -13,7 +13,7 @@ export default function Index() {
           />
           </View>
           <Text style={styles.title}>
-            WANDER <Text style={[styles.title, styles.titlePets]}>PETS</Text>
+            WANDERS <Text style={[styles.title, styles.titlePets]}>PETS</Text>
           </Text>
         </View>
       </View>
