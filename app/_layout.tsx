@@ -5,15 +5,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function RootLayout() {
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <StatusBar style="dark" hidden={false} />
+    <SafeAreaView style={styles.container} edges={["top"]}>
+      <StatusBar style="dark" />
 
-      {/* Stack Navigator */}
-      <Stack>
-        <Stack.Screen
-          name="(tabs)"
-          options={{ headerShown: false }}
-        />
+      <Stack screenOptions={{ headerShown: false }}>
+        {/* Main app (tabs) */}
+        <Stack.Screen name="(tabs)" />
+
+        {/* Optional pages */}
+        <Stack.Screen name="login" />
+        <Stack.Screen name="register" />
       </Stack>
     </SafeAreaView>
   );
