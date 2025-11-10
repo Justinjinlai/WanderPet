@@ -10,7 +10,6 @@ WanderPet is a community-driven React Native application that enables users to *
 
 - **Lost & Found Listings:** Post details, photos, and locations of lost or found pets to alert your community.
 - **Interactive Map:** View nearby reports in real-time using geolocation.
-- **Image Uploads:** Securely upload pet photos via Cloudinary for fast and reliable image hosting.
 - **Smart Search & Filters:** Narrow results by pet type, breed, or location.
 - **User Authentication:** Secure signup/login using JWT-based authentication.
 - **Cross-Platform Support:** Built with Expo for seamless Android and iOS performance.
@@ -26,7 +25,6 @@ Before running the project, ensure you have the following installed:
 - **Node.js** (v18 or higher) — for running the development environment  
 - **npm** — Node package manager  
 - **Expo Go App** — to test on mobile devices  
-- **Cloudinary Account** — for image hosting  
 - **Google Maps API Key** (optional if map features are included later)
 
 ---
