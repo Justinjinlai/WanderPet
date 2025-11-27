@@ -10,6 +10,8 @@ import {
   View,
 } from "react-native";
 
+
+
 type Pet = {
   id: string;
   name: string;
