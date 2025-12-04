@@ -109,7 +109,7 @@ export default function AdoptHubInPawTab() {
       <Text style={s.title}>🐾 Adopt a pet</Text>
       <Text style={s.subtitle}>Every adoption story begins with an act of kindness</Text>
 
-      {/* grid */}
+      {/*  */}
       <FlatList
         data={filtered}
         keyExtractor={(item) => item.id}

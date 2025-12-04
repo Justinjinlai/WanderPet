@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import {
@@ -106,7 +107,16 @@ export default function Index() {
         <ActivityIndicator size="large" color="#FF7F50" style={{ marginTop: 20 }} />
       ) : (
         pets.map((pet) => (
-          <View key={pet.id} style={styles.card}>
+          <TouchableOpacity
+            key={pet.id}
+            style={styles.card}
+            onPress={() =>
+              router.push({
+                pathname: "/pet/[id]",
+                params: { id: pet.id },
+              })
+            }
+          >
             {pet.imageURL ? (
               <Image source={{ uri: pet.imageURL }} style={styles.petImage} />
             ) : (
@@ -122,7 +132,7 @@ export default function Index() {
                 {pet.description}
               </Text>
             </View>
-          </View>
+          </TouchableOpacity>
         ))
       )}
     </ScrollView>

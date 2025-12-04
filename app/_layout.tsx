@@ -12,7 +12,7 @@ export default function RootLayout() {
         {/* Main app (tabs) */}
         <Stack.Screen name="(tabs)" />
 
-        {/* Optional pages */}
+        {/* Secondary pages */}
         <Stack.Screen name="login" />
         <Stack.Screen name="register" />
       </Stack>

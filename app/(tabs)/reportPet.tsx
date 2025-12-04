@@ -15,26 +15,31 @@ import {
 import { db, storage } from "../../firebase";
 
 export default function ReportPet() {
-  const [image, setImage] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
+  const [uploading, setUploading] = useState<boolean>(false);
 
-  const [petName, setPetName] = useState("");
-  const [petType, setPetType] = useState("");
-  const [showTypeOptions, setShowTypeOptions] = useState(false);
+  const [petName, setPetName] = useState<string>("");
+  const [petType, setPetType] = useState<string>("");
+  const [showTypeOptions, setShowTypeOptions] = useState<boolean>(false);
 
-  const [description, setDescription] = useState("");
-  const [contact, setContact] = useState("");
+  const [description, setDescription] = useState<string>("");
+  const [contact, setContact] = useState<string>("");
 
-  // Error states
-  const [errors, setErrors] = useState({
+  // This part is used to prevent unexpected errors
+  const [errors, setErrors] = useState<{
+    petName: string;
+    petType: string;
+    description: string;
+    contact: string;
+  }>({
     petName: "",
     petType: "",
     description: "",
     contact: "",
   });
 
-  // ====== VALIDATION ======
-  const validatePetName = (text) => {
+  // This section is used to validate user inputs
+  const validatePetName = (text: string) => {
     const cleaned = text.replace(/[^a-zA-Z ]/g, "");
     setPetName(cleaned);
 
@@ -45,7 +50,7 @@ export default function ReportPet() {
     }
   };
 
-  const validatePetType = (value) => {
+  const validatePetType = (value: string) => {
     setPetType(value);
 
     if (!value) {
@@ -55,7 +60,7 @@ export default function ReportPet() {
     }
   };
 
-  const validateDescription = (text) => {
+  const validateDescription = (text: string) => {
     const cleaned = text.replace(/[^\w\s.,!?-]/g, "");
     setDescription(cleaned);
 
@@ -69,7 +74,7 @@ export default function ReportPet() {
     }
   };
 
-  const formatPhone = (text) => {
+  const formatPhone = (text: string) => {
     const nums = text.replace(/\D/g, "").slice(0, 10);
     let formatted = nums;
 
@@ -91,7 +96,7 @@ export default function ReportPet() {
     }
   };
 
-  // Pick Image
+  // This block of code is for the user to be able to access his phone gallery and choose a potential image to be used for his lost pet.
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -103,8 +108,8 @@ export default function ReportPet() {
     }
   };
 
-  // Upload to Firebase
-  const uploadImage = async () => {
+  // This block of code is used to store everything to our online firebase database.
+  const uploadImage = async (): Promise<string | null> => {
     if (!image) return null;
 
     const response = await fetch(image);
@@ -117,57 +122,56 @@ export default function ReportPet() {
     return await getDownloadURL(storageRef);
   };
 
-  // Submit
- const submit = async () => {
-  if (
-    !petName ||
-    !petType ||
-    !description ||
-    !contact ||
-    Object.values(errors).some((e) => e !== "")
-  ) {
-    Alert.alert("Error", "Please fix the errors before submitting.");
-    return;
-  }
+  // To submit the post after validating every input.
+  const submit = async () => {
+    if (
+      !petName ||
+      !petType ||
+      !description ||
+      !contact ||
+      Object.values(errors).some((e) => e !== "")
+    ) {
+      Alert.alert("Error", "Please fix the errors before submitting.");
+      return;
+    }
 
-  setUploading(true);
+    setUploading(true);
 
-  try {
-    const imageURL = await uploadImage();
+    try {
+      const imageURL = await uploadImage();
 
-    await addDoc(collection(db, "lostPets"), {
-      petName,
-      petType,
-      description,
-      contact,
-      imageURL: imageURL || "",
-      timestamp: serverTimestamp(),
-    });
+      await addDoc(collection(db, "lostPets"), {
+        petName,
+        petType,
+        description,
+        contact,
+        imageURL: imageURL || "",
+        timestamp: serverTimestamp(),
+      });
 
-    Alert.alert("Success", "Pet reported successfully!");
+      Alert.alert("Success", "Pet reported successfully!");
 
-    // reset fields
-    setPetName("");
-    setPetType("");
-    setDescription("");
-    setContact("");
-    setImage(null);
+      // This section is used to reset the fields after succesfully submitting a post
+      setPetName("");
+      setPetType("");
+      setDescription("");
+      setContact("");
+      setImage(null);
 
-  } catch (error) {
-    console.log(error);
-    Alert.alert("Error", "Something went wrong.");
-  }
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Error", "Something went wrong.");
+    }
 
-  setUploading(false);
-};
-
+    setUploading(false);
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Report Lost Pet</Text>
 
       {/* Image Upload */}
-      <Text style={styles.label}>📸 Pet Photo</Text>
+      <Text style={styles.label}>Pet Photo</Text>
       <TouchableOpacity style={styles.imageCard} onPress={pickImage}>
         {image ? (
           <Image source={{ uri: image }} style={styles.preview} />
@@ -177,7 +181,7 @@ export default function ReportPet() {
       </TouchableOpacity>
 
       {/* Pet Name */}
-      <Text style={styles.label}>🐶 Pet Name</Text>
+      <Text style={styles.label}>Pet Name</Text>
       <TextInput
         style={[styles.input, errors.petName && styles.inputError]}
         placeholder="e.g., Bella"
@@ -187,8 +191,8 @@ export default function ReportPet() {
       />
       {errors.petName ? <Text style={styles.errorText}>{errors.petName}</Text> : null}
 
-      {/* CUSTOM PET TYPE SELECTOR */}
-      <Text style={styles.label}>🐾 Pet Type</Text>
+      {/* Pet selector */}
+      <Text style={styles.label}>Pet Type</Text>
 
       <TouchableOpacity
         style={[styles.selectBox, errors.petType && styles.inputError]}
@@ -219,7 +223,7 @@ export default function ReportPet() {
       {errors.petType ? <Text style={styles.errorText}>{errors.petType}</Text> : null}
 
       {/* Description */}
-      <Text style={styles.label}>📝 Description</Text>
+      <Text style={styles.label}>Description</Text>
       <TextInput
         style={[styles.input, styles.description, errors.description && styles.inputError]}
         placeholder="Describe the pet..."
@@ -233,7 +237,7 @@ export default function ReportPet() {
       ) : null}
 
       {/* Contact */}
-      <Text style={styles.label}>📞 Contact Number</Text>
+      <Text style={styles.label}>Contact Number</Text>
       <TextInput
         style={[styles.input, errors.contact && styles.inputError]}
         placeholder="e.g. 716-555-1234"
@@ -298,7 +302,6 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
 
-  // Custom selector
   selectBox: {
     width: "100%",
     borderWidth: 1,
