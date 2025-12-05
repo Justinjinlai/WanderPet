@@ -11,15 +11,28 @@ import {
   View,
 } from "react-native";
 
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
 
-  const onLogin = () => {
+  const onLogin = async () => {
+    // Basic form validation
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))
       return Alert.alert("Invalid email");
     if (pwd.length < 6) return Alert.alert("Password must be 6+ chars");
-    router.replace("/(tabs)/profile");
+
+    try {
+      //Firebase login
+      await signInWithEmailAndPassword(auth, email, pwd);
+
+      // If login is sucessfull, redirect the user to the main page.
+      router.replace("../(tabs)");
+    } catch (err: any) {
+      Alert.alert("Login failed", err.message);
+    }
   };
 
   return (
@@ -45,6 +58,7 @@ export default function Login() {
           autoCapitalize="none"
           placeholderTextColor="#999"
         />
+
         <TextInput
           style={s.input}
           value={pwd}
@@ -108,6 +122,6 @@ const s = StyleSheet.create({
     width: "100%",
     marginTop: 6,
   },
-  btnTxt: { color: "#fff", fontWeight: "700" },
-  link: { textAlign: "center", marginTop: 12, color: "#111827" },
+  btnTxt: { color: "#fff", fontWeight: "800", fontSize: 16 },
+  link: { textAlign: "center", marginTop: 12, color: "#111827", fontWeight: "600" },
 });

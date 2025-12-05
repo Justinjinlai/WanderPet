@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import {
   Alert,
@@ -11,17 +11,29 @@ import {
   View,
 } from "react-native";
 
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+
 export default function Register() {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [confirm, setConfirm] = useState("");
 
-  const onRegister = () => {
+
+  //Code to create account using email and password. The information will be stored in firestore.
+  const onRegister = async () => {
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))
       return Alert.alert("Invalid email");
     if (pwd.length < 6) return Alert.alert("Password must be 6+ chars");
     if (pwd !== confirm) return Alert.alert("Passwords do not match");
-    Alert.alert("Account created (demo)", "Backend will wire this later 🐾");
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, pwd);
+
+      router.replace("../(tabs)");
+    } catch (err: any) {
+      Alert.alert("Registration Failed", err.message);
+    }
   };
 
   return (
@@ -38,7 +50,7 @@ export default function Register() {
         />
 
         <Text style={s.h1}>Create Account</Text>
-        <Text style={s.sub}>Join our community and let's help each other 💕</Text>
+        <Text style={s.sub}>Join our community and let's help each other</Text>
 
         <TextInput
           style={s.input}
@@ -48,6 +60,7 @@ export default function Register() {
           autoCapitalize="none"
           placeholderTextColor="#999"
         />
+
         <TextInput
           style={s.input}
           value={pwd}
@@ -56,6 +69,7 @@ export default function Register() {
           secureTextEntry
           placeholderTextColor="#999"
         />
+
         <TextInput
           style={s.input}
           value={confirm}

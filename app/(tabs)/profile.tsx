@@ -1,117 +1,157 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
-import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { router } from "expo-router";
+import { signOut } from "firebase/auth";
+import React, { useContext } from "react";
+import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { auth } from "../../firebase";
+import { AuthContext } from "../../hooks/authContext";
 
 export default function Profile() {
+  const { user } = useContext(AuthContext);
+
+  const onLogout = () => {
+    Alert.alert(
+      "Log Out?",
+      "Are you sure you want to log out?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Log Out",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await signOut(auth);
+              router.replace("/login");
+            } catch (err: any) {
+              Alert.alert("Logout failed", err.message);
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <LinearGradient
       colors={["#A7F3D0", "#FFB6A3"]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
-      style={s.gradient}
+      style={styles.gradient}
     >
-      <View style={s.card}>
+      <View style={styles.card}>
         <Image
           source={require("../../assets/images/logo_noName.png")}
-          style={s.logo}
+          style={styles.avatar}
         />
 
-        <Text style={s.h1}>Welcome to Wander Pets 🐾</Text>
-        <Text style={s.sub}>
-          Let's together be the hero that they need. Login to explore more features!
-        </Text>
+        <Text style={styles.name}>Welcome!</Text>
 
-        <Link href="/login" asChild>
-          <Pressable style={s.btnPrimary}>
-            <Text style={s.btnTxt}>Log in</Text>
-          </Pressable>
-        </Link>
+        <Text style={styles.email}>{user?.email}</Text>
 
-        <Link href="/register" asChild>
-          <Pressable style={s.btnGhost}>
-            <Text style={s.btnGhostTxt}>Create account</Text>
-          </Pressable>
-        </Link>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Account Info</Text>
+
+          <View style={styles.row}>
+            <Text style={styles.label}>Email:</Text>
+            <Text style={styles.value}>{user?.email}</Text>
+          </View>
+        </View>
+
+        <Pressable style={styles.logoutBtn} onPress={onLogout}>
+          <Text style={styles.logoutTxt}>Log Out</Text>
+        </Pressable>
       </View>
-
-      <Text style={s.footer}>Life is better when you have them 💕</Text>
     </LinearGradient>
   );
 }
 
-const s = StyleSheet.create({
+const styles = StyleSheet.create({
   gradient: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
   },
+
   card: {
-    width: "90%",
-    backgroundColor: "rgba(255, 255, 255, 0.85)",
-    borderRadius: 24,
-    paddingVertical: 32,
+    width: "92%",
+    backgroundColor: "rgba(255,255,255,0.9)",
+    borderRadius: 22,
+    paddingVertical: 30,
     paddingHorizontal: 20,
     alignItems: "center",
     shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 8 },
-    shadowRadius: 16,
-    elevation: 6,
-  },
-  logo: {
-    width: 160,
-    height: 160,
-    borderRadius: 90,
-    marginBottom: 16,
-    shadowColor: "#000",
     shadowOpacity: 0.15,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 12,
+    elevation: 5,
   },
-  h1: { fontSize: 26, fontWeight: "800", color: "#111827", textAlign: "center" },
-  sub: {
+
+  avatar: {
+    width: 120,
+    height: 120,
+    borderRadius: 80,
+    marginBottom: 14,
+  },
+
+  name: {
+    fontSize: 26,
+    fontWeight: "800",
+    color: "#111827",
+    marginBottom: 4,
+  },
+
+  email: {
+    fontSize: 16,
     color: "#6B7280",
-    textAlign: "center",
-    marginVertical: 12,
-    fontSize: 15,
-    lineHeight: 22,
+    marginBottom: 20,
   },
-  btnPrimary: {
+
+  section: {
+    width: "100%",
+    marginTop: 15,
+    paddingTop: 10,
+  },
+
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#111827",
+    marginBottom: 10,
+  },
+
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e5e7eb",
+  },
+
+  label: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#374151",
+  },
+
+  value: {
+    fontSize: 16,
+    color: "#4b5563",
+    fontWeight: "500",
+  },
+
+  logoutBtn: {
     backgroundColor: "#FF7A59",
     paddingVertical: 14,
-    paddingHorizontal: 24,
-    borderRadius: 14,
-    minWidth: 220,
+    borderRadius: 10,
+    width: "100%",
+    marginTop: 25,
     alignItems: "center",
-    marginTop: 10,
-    shadowColor: "#FF7A59",
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 6,
-    elevation: 3,
   },
-  btnTxt: { color: "#fff", fontWeight: "800", fontSize: 16 },
-  btnGhost: {
-    borderWidth: 1.5,
-    borderColor: "#E5E7EB",
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 14,
-    minWidth: 220,
-    alignItems: "center",
-    marginTop: 8,
-    backgroundColor: "rgba(255,255,255,0.5)",
-  },
-  btnGhostTxt: { color: "#111827", fontWeight: "700", fontSize: 15 },
-  footer: {
-    marginTop: 20,
+
+  logoutTxt: {
     color: "#fff",
-    fontWeight: "600",
-    fontSize: 14,
-    textShadowColor: "rgba(0,0,0,0.2)",
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    fontSize: 16,
+    fontWeight: "700",
   },
 });
