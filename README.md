@@ -34,25 +34,18 @@ git clone https://github.com/Justinjniai/WanderPet.git
 
 ```
 
----
-
-### **Step 2: Backend Setup**
-In the terminal (Use commandprompt to ensure you can install dependencies)
-
-cd backend
-npm install
-
----
-### **Step 3: .env file Setup**
-PORT=5000
-MONGO_URI=your_mongodb_atlas_connection_string
-JWT_SECRET=your_custom_jwt_secret
-
----
-### **Step 4: FrontEnd Setup**
-In a seperate terminal(make sure your in root folder) type this into the terminal:
+### **Step 2: Install dependencies**
+In the terminal in the following order enter (Use commandprompt to ensure you can install dependencies):
 
 npm install
+npx expo install
+
+---
+
+
+---
+### **Step 3: Run expo**
+In the same terminal type this into the terminal:
 npx expo start --tunnel
 
 
