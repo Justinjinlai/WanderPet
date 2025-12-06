@@ -41,14 +41,11 @@ npm install
 npx expo install
 
 ---
-
-
----
 ### **Step 3: Run expo**
 In the same terminal type this into the terminal:
 npx expo start --tunnel
 
-
+Then scan the code on your phone which will open the app on Expo Go 
 ```
 
 
