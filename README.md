@@ -9,9 +9,8 @@ WanderPet is a community-driven React Native application that enables users to *
 ##  Key Features
 
 - **Lost & Found Listings:** Post details, photos, and locations of lost or found pets to alert your community.
-- **Smart Search & Filters:** Narrow results by pet type, breed, or location.
 - **User Authentication:** Secure signup/login using JWT-based authentication.
-- **Cross-Platform Support:** Built with Expo for seamless Android and iOS performance.
+- **Adopt a Pet** Adopt Pets that need a home
 
 ---
 
@@ -37,9 +36,8 @@ git clone https://github.com/Justinjniai/WanderPet.git
 ### **Step 2: Install dependencies**
 In the terminal in the following order enter (Use commandprompt to ensure you can install dependencies):
 
-npm install
-
-npx expo install
+- npm install
+- npx expo install
 
 ---
 ### **Step 3: Run expo**
