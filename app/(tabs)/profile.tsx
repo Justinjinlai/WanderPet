@@ -7,8 +7,10 @@ import { auth } from "../../firebase";
 import { AuthContext } from "../../hooks/authContext";
 
 export default function Profile() {
+  // Get current authenticated user
   const { user } = useContext(AuthContext);
 
+  // Handles Log Out button press
   const onLogout = () => {
     Alert.alert(
       "Log Out?",
@@ -32,6 +34,7 @@ export default function Profile() {
   };
 
   return (
+    // Gradient background wrapper for profile card
     <LinearGradient
       colors={["#A7F3D0", "#FFB6A3"]}
       start={{ x: 0, y: 0 }}
@@ -72,7 +75,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
   },
-
+// Profile card container
   card: {
     width: "92%",
     backgroundColor: "rgba(255,255,255,0.9)",
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     elevation: 5,
   },
-
+  // Avatar image styling
   avatar: {
     width: 120,
     height: 120,
@@ -139,7 +142,7 @@ const styles = StyleSheet.create({
     color: "#4b5563",
     fontWeight: "500",
   },
-
+  // Logout button styling
   logoutBtn: {
     backgroundColor: "#FF7A59",
     paddingVertical: 14,

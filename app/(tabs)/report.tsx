@@ -50,6 +50,7 @@ export default function ReportPet() {
     }
   };
 
+  // Validates user's pet type
   const validatePetType = (value: string) => {
     setPetType(value);
 
@@ -59,7 +60,7 @@ export default function ReportPet() {
       setErrors((prev) => ({ ...prev, petType: "" }));
     }
   };
-
+  // Validates if user has a long enough description
   const validateDescription = (text: string) => {
     const cleaned = text.replace(/[^\w\s.,!?-]/g, "");
     setDescription(cleaned);

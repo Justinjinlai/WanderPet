@@ -1,3 +1,4 @@
+// Old MongoDB not used with current version of app kept incase we pivot back
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');

@@ -1,3 +1,5 @@
+// import router lets user move to another screen 
+// import collection is for firestore functions to help retrieve data from database
 import { router } from "expo-router";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -12,6 +14,7 @@ import {
 } from "react-native";
 import { db } from "../../firebase";
 
+// Displays how pets are shown
 type Pet = {
   id: string;
   petName: string;
@@ -22,6 +25,7 @@ type Pet = {
   timestamp?: any;
 };
 
+// Stores lists of pets and controls how it sorts by timestamp
 export default function Index() {
   const [pets, setPets] = useState<Pet[]>([]);
   const [loading, setLoading] = useState(true);

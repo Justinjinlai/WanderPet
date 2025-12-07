@@ -1,3 +1,4 @@
+// Old MongoDB not used with current version of app kept incase we pivot back
 const mongoose = require('mongoose');
 
 const connectDB = async () => {

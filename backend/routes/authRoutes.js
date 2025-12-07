@@ -1,3 +1,4 @@
+// Old MongoDB not used with current version of app kept incase we pivot back
 const express = require('express');
 const router = express.Router();
 const { register, login } = require('../controllers/authController');
