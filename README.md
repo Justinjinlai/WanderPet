@@ -38,6 +38,7 @@ git clone https://github.com/Justinjniai/WanderPet.git
 In the terminal in the following order enter (Use commandprompt to ensure you can install dependencies):
 
 npm install
+
 npx expo install
 
 ---
